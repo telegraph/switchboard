@@ -18,6 +18,8 @@ import Application from '../../src/domain/Application'
 import {ArgumentError} from 'ow'
 import Chance from 'chance'
 
+const chance = new Chance()
+
 const APPLICATION_ID = '294ba6b5-af8b-4ab8-a74d-8f2fd1aaa84a'
 const APPLICATION_NAME = 'Public Website'
 const APPLICATION_SECRET = 'F2aeh5xf6BAHt4NVj6KsBpRU13IHC2WE'
@@ -73,7 +75,7 @@ describe('Application domain', () => {
     describe('name', () => {
       test('Should return name', () =>
         expect(application.name)
-          .toBe(TRELLO_BOARD.name)
+          .toBe(APPLICATION_NAME)
       )
 
       test('Should set name', () => {

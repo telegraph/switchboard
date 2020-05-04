@@ -1,6 +1,11 @@
 pipeline {
   agent any
 
+  options {
+    ansiColor('xterm')
+    disableConcurrentBuilds()
+  }
+
   tools {
     nodejs 'NodeJS-12.16'
   }
