@@ -23,12 +23,47 @@ pipeline {
     }
 
     stage('Quality Assurance') {
-      steps {
-        dir("${WORKSPACE}/server") {
-          sh '''
-            npm run lint | true
-            npm test
-          '''
+      parallel {
+        stage('Static code analysis') {
+          steps {
+            dir("${WORKSPACE}/server") {
+              sh '''
+                npm run lint | true
+                npm run cpd | true
+              '''
+            }
+          }
+          post {
+            always {
+              recordIssues aggregatingResults: true, sourceCodeEncoding: 'UTF-8',
+                referenceJobName: 'Dashboard/switchboard-server/1.x.x', tools: [
+                  esLint(pattern: 'server/reports/eslint.xml'),
+                  cpd(pattern: 'server/reports/cpd/jscpd-report.xml')
+                ]
+            }
+          }
+        }
+
+        stage('Unit testing') {
+          steps {
+            dir("${WORKSPACE}/server") {
+              sh '''
+                npm test
+              '''
+            }
+          }
+          post {
+            always {
+              junit 'server/reports/test/junit.xml'
+            }
+            success {
+              step([
+                $class: 'CloverPublisher',
+                cloverReportDir: 'server/reports/coverage',
+                cloverReportFileName: 'clover.xml'
+              ])
+            }
+          }
         }
       }
     }
