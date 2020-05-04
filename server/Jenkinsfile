@@ -28,8 +28,8 @@ pipeline {
           steps {
             dir("${WORKSPACE}/server") {
               sh '''
-                npm run lint | true
                 npm run cpd | true
+                npm run lint -- -f checkstyle > reports/eslint.xml | true
               '''
             }
           }
@@ -54,7 +54,7 @@ pipeline {
           }
           post {
             always {
-              junit 'server/reports/test/junit.xml'
+              junit 'server/reports/junit.xml'
             }
             success {
               step([
