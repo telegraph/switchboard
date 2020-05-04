@@ -1,12 +1,17 @@
 pipeline {
   agent any
+
   stages {
     stage('Client') {
-      load('client/Jenkinsfile')
+      steps {
+        load('client/Jenkinsfile')
+      }
     }
 
     stage('Server') {
-      load('server/Jenkinsfile')
+      steps {
+        load('server/Jenkinsfile')
+      }
     }
   }
 }

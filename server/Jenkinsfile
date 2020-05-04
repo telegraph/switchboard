@@ -1,3 +1,11 @@
 pipeline {
   agent any
+
+  stages {
+    stage('Clean') {
+      steps {
+        sh 'npm run clean'
+      }
+    }
+  }
 }
