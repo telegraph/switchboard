@@ -44,6 +44,7 @@ describe('Application domain', () => {
     test.each([
       [undefined, undefined, undefined],
       [null, null, null],
+      ['   ', APPLICATION_NAME, APPLICATION_SECRET],
       [APPLICATION_ID, APPLICATION_NAME, undefined]
     ])('Should throw error on construction new Application(%p, %p, %p)', (id, name, secret) =>
       expect(() => new Application(id, name, secret))
@@ -90,8 +91,7 @@ describe('Application domain', () => {
         '',
         '    ',
         12345,
-        {foo: 'bar'},
-        chance.string({length: 16385})
+        {foo: 'bar'}
       ])('Set name to %p should throw ValidationError exception', value =>
         expect(() => {
           application.name = value

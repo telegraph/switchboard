@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 
+import ow from 'ow'
+
 export default class Application {
 
   constructor(id, name, secret) {
+    validateId(id)
+    validateName(name)
+    validateSecret(secret)
     this._id = id
     this._name = name
     this._description = ''
@@ -32,6 +37,7 @@ export default class Application {
   }
 
   set name(value) {
+    validateName(value)
     this._name = value
   }
 
@@ -40,6 +46,7 @@ export default class Application {
   }
 
   set secret(value) {
+    validateSecret(value)
     this._secret = value
   }
 
@@ -50,4 +57,16 @@ export default class Application {
   set description(value) {
     this._description = value
   }
+}
+
+function validateId(value) {
+  ow(value, ow.string.nonEmpty.is(value => value.trim() !== ''))
+}
+
+function validateName(value) {
+  ow(value, ow.string.nonEmpty.is(value => value.trim() !== ''))
+}
+
+function validateSecret(value) {
+  ow(value, ow.string.nonEmpty.is(value => value.trim() !== ''))
 }
