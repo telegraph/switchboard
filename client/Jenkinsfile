@@ -1,0 +1,29 @@
+pipeline {
+  agent any
+
+  tools {
+    nodejs 'NodeJS-12.16'
+  }
+
+  stages {
+    stage('Install and clean') {
+      steps {
+        sh '''
+          cd ${WORKSPACE}/client
+          npm ci
+          npm run clean
+        '''
+      }
+    }
+
+    stage('Code quality') {
+      steps {
+        sh '''
+          cd ${WORKSPACE}/client
+          npm run lint
+          npm test
+        '''
+      }
+    }
+  }
+}
