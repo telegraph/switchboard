@@ -7,63 +7,49 @@ pipeline {
   }
 
   tools {
-    nodejs 'NodeJS-12.16'
+    jdk 'openjdk-11'
   }
 
   stages {
     stage('Install and clean') {
       steps {
-        dir("${WORKSPACE}/client") {
-          sh '''
-            npm ci
-            npm run clean
-          '''
-        }
+        sh './gradlew clean'
       }
     }
 
     stage('Quality Assurance') {
       parallel {
-        stage('Static code analysis') {
-          steps {
-            dir("${WORKSPACE}/client") {
-              sh '''
-                npm run cpd | true
-                npm run lint -- -f checkstyle > reports/eslint.xml | true
-              '''
-            }
-          }
-          post {
-            always {
-              recordIssues aggregatingResults: true, sourceCodeEncoding: 'UTF-8',
-                referenceJobName: 'Dashboard/switchboard-client/1.x.x', tools: [
-                  esLint(pattern: 'client/reports/eslint.xml'),
-                  cpd(pattern: 'client/reports/cpd/jscpd-report.xml')
-                ]
-            }
-          }
-        }
+//         stage('Static code analysis') {
+//           steps {
+//             sh './gradlew clean'
+//           }
+//           post {
+//             always {
+//               recordIssues aggregatingResults: true, sourceCodeEncoding: 'UTF-8',
+//                 referenceJobName: 'Dashboard/switchboard-client/1.x.x', tools: [
+//                   esLint(pattern: 'client/reports/eslint.xml'),
+//                   cpd(pattern: 'client/reports/cpd/jscpd-report.xml')
+//                 ]
+//             }
+//           }
+//         }
 
         stage('Unit testing') {
           steps {
-            dir("${WORKSPACE}/client") {
-              sh '''
-                npm test
-              '''
-            }
+            sh './gradlew check'
           }
-          post {
-            always {
-              junit 'client/reports/junit.xml'
-            }
-            success {
-              step([
-                $class: 'CloverPublisher',
-                cloverReportDir: 'client/reports/coverage',
-                cloverReportFileName: 'clover.xml'
-              ])
-            }
-          }
+//           post {
+//             always {
+//               junit 'client/reports/junit.xml'
+//             }
+//             success {
+//               step([
+//                 $class: 'CloverPublisher',
+//                 cloverReportDir: 'client/reports/coverage',
+//                 cloverReportFileName: 'clover.xml'
+//               ])
+//             }
+//           }
         }
       }
     }
