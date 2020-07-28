@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Application {
   @Id
   @EqualsAndHashCode.Include
@@ -30,6 +30,11 @@ public class Application {
     contexts = new ContextAggregator();
     featureFlags = new FeatureFlagAggregator();
     userGroups = new UserGroupAggregator();
+  }
+
+  public Application(String id) {
+    this();
+    this.id = id;
   }
 
   public Map<String, Boolean> getEnabledFeaturesForClient(ClientInfo clientInfo) {

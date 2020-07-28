@@ -9,6 +9,7 @@
     "clean:all": "gulp clean-all",
     "cpd": "jscpd src -r console,xml -o ./reports/cpd",
     "lint": "eslint src __tests__",
+    "lintCi": "eslint -f checkstyle src __tests__ > reports/eslint.xml",
     "test": "jest --color"
   },
   "author": "",

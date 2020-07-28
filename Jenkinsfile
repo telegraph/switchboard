@@ -21,7 +21,7 @@ pipeline {
   }
 
   stages {
-    stage('Install and clean') {
+    stage('Install and Clean') {
       steps {
         sh './gradlew clean'
       }
@@ -29,7 +29,7 @@ pipeline {
 
     stage('Quality Assurance') {
       parallel {
-        stage('Vulnerabilities analysis') {
+        stage('Vulnerabilities Analysis') {
           when {
             branch "${env.MAIN_BRANCH}"
           }
@@ -44,7 +44,7 @@ pipeline {
           }
         }
 
-        stage('Unit testing and Static Code Analysis') {
+        stage('Unit Testing and Static Code Analysis') {
           steps {
             sh './gradlew check'
           }
