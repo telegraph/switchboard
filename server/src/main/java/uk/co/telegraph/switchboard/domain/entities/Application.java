@@ -16,6 +16,7 @@ public class Application {
   private String id;
   private String name;
   private String description;
+  private String secret;
 
   @Setter(AccessLevel.NONE)
   private ContextAggregator contexts;

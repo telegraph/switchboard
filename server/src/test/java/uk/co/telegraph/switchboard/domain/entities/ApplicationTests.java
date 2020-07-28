@@ -10,6 +10,7 @@ class ApplicationTests {
   public static final String APPLICATION_ID = "d58f5d98-4e54-4a1e-9327-fb4331017608";
   public static final String APPLICATION_NAME = "Mobile Application";
   public static final String APPLICATION_DESCRIPTION = "A simple mobile application";
+  public static final String APPLICATION_SECRET = "Some complex secret";
 
 	private Application application;
 
@@ -38,6 +39,14 @@ class ApplicationTests {
 
 		assertThat(application.getDescription())
 				.isEqualTo(APPLICATION_DESCRIPTION);
+	}
+
+	@Test
+	void should_set_and_get_secret() {
+		application.setSecret(APPLICATION_SECRET);
+
+		assertThat(application.getSecret())
+				.isEqualTo(APPLICATION_SECRET);
 	}
 
 	@Test
