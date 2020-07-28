@@ -6,6 +6,15 @@ pipeline {
     disableConcurrentBuilds()
   }
 
+  environment {
+    PROJECT_NAME = 'switchboard'
+    PROJECT_GROUP = 'Editorial Dashboard'
+    CLOUD_BILLING = 'newsroom'
+    MAIN_BRANCH = '1.x.x'
+    BUILD_VERSION = "${env.TAG_NAME ? env.TAG_NAME : 'commit-' + env.GIT_COMMIT.substring(0, 7)}"
+    ORG_GRADLE_daemon = false
+  }
+
   tools {
     jdk 'openjdk-11'
   }
@@ -34,22 +43,37 @@ pipeline {
 //           }
 //         }
 
+        stage('Vulnerabilities analysis') {
+          when {
+            branch "${env.MAIN_BRANCH}"
+          }
+          tools {
+            snyk 'snyk-latest'
+          }
+          environment {
+            SNYK_TOKEN = credentials('snyk-newsroom')
+          }
+          steps {
+            sh 'snyk monitor --org=newsroom'
+          }
+        }
+
         stage('Unit testing') {
           steps {
             sh './gradlew check'
           }
-//           post {
-//             always {
-//               junit 'client/reports/junit.xml'
-//             }
-//             success {
-//               step([
-//                 $class: 'CloverPublisher',
-//                 cloverReportDir: 'client/reports/coverage',
-//                 cloverReportFileName: 'clover.xml'
-//               ])
-//             }
-//           }
+          post {
+            always {
+              junit 'client/reports/junit.xml,server/build/test-results/test/binary/*.xml'
+            }
+            success {
+              step([
+                $class: 'CloverPublisher',
+                cloverReportDir: 'client/reports/coverage',
+                cloverReportFileName: 'clover.xml'
+              ])
+            }
+          }
         }
       }
     }

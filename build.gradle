@@ -1,8 +1,8 @@
 group = 'uk.co.telegraph'
-version = '0.0.1-SNAPSHOT'
+description = 'Switchboard is a feature flag configuration service.'
 
 allprojects {
   repositories {
-    mavenCentral() 
+    mavenCentral()
   }
 }
