@@ -12,11 +12,12 @@ pipeline {
     CLOUD_BILLING = 'newsroom'
     MAIN_BRANCH = '1.x.x'
     BUILD_VERSION = "${env.TAG_NAME ? env.TAG_NAME : 'commit-' + env.GIT_COMMIT.substring(0, 7)}"
-    ORG_GRADLE_daemon = false
+    GRADLE_OPTS = '-Dorg.gradle.daemon=false'
   }
 
   tools {
     jdk 'openjdk-11'
+    nodejs 'NodeJS-12.16'
   }
 
   stages {
