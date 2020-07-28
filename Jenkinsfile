@@ -29,21 +29,6 @@ pipeline {
 
     stage('Quality Assurance') {
       parallel {
-//         stage('Static code analysis') {
-//           steps {
-//             sh './gradlew clean'
-//           }
-//           post {
-//             always {
-//               recordIssues aggregatingResults: true, sourceCodeEncoding: 'UTF-8',
-//                 referenceJobName: 'Dashboard/switchboard-client/1.x.x', tools: [
-//                   esLint(pattern: 'client/reports/eslint.xml'),
-//                   cpd(pattern: 'client/reports/cpd/jscpd-report.xml')
-//                 ]
-//             }
-//           }
-//         }
-
         stage('Vulnerabilities analysis') {
           when {
             branch "${env.MAIN_BRANCH}"
@@ -59,7 +44,7 @@ pipeline {
           }
         }
 
-        stage('Unit testing') {
+        stage('Unit testing and Static Code Analysis') {
           steps {
             sh './gradlew check'
           }
@@ -73,6 +58,7 @@ pipeline {
                 cloverReportDir: 'client/reports/coverage',
                 cloverReportFileName: 'clover.xml'
               ])
+              jacoco()
             }
           }
         }
