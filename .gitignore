@@ -1,22 +1,24 @@
-### Node ###
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### Javascript ###
 dist/
 reports/
 node_modules/
 .cache/
 
-### General ###
-*.log
-
-### OS ###
-.DS_Store
-
-### Visual studio code ###
-.project/
-.settings/
-.classpath/
-bin/
-.sonarlint/
-.vscode/
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
 ### IntelliJ IDEA ###
 .idea
@@ -24,9 +26,15 @@ bin/
 *.iml
 *.ipr
 out/
+!**/src/main/**/out/
+!**/src/test/**/out/
 
 ### NetBeans ###
-nbproject/private/
-nbbuild/
-nbdist/
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 
+### VS Code ###
+.vscode/
