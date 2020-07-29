@@ -40,7 +40,7 @@ pipeline {
             SNYK_TOKEN = credentials('snyk-newsroom')
           }
           steps {
-            sh 'snyk monitor --org=newsroom'
+            sh 'snyk monitor --org=newsroom client server'
           }
         }
 
