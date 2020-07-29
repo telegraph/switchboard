@@ -35,6 +35,7 @@ pipeline {
           }
           tools {
             snyk 'snyk-latest'
+            gradle 'Gradle6.5'
           }
           environment {
             SNYK_TOKEN = credentials('snyk-newsroom')
