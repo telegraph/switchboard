@@ -31,10 +31,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+	implementation 'com.sun.xml.bind:jaxb-osgi:2.3.3'
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation 'io.rest-assured:rest-assured-common:4.3.1'
+	testImplementation 'io.rest-assured:spring-mock-mvc:4.3.1'
 }
 
 test {

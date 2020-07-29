@@ -59,6 +59,7 @@ class ClientInfoTest {
     Map<String, Boolean> flags = new HashMap<>();
     when(application.getEnabledFeaturesForClient(any()))
         .thenReturn(flags);
+
     clientInfo.setApplication(application);
 
     assertThat(clientInfo.getFeatureFlags())
