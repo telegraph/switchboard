@@ -1,16 +1,16 @@
 package uk.co.telegraph.switchboard.domain.entities;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.co.telegraph.switchboard.domain.entities.ApplicationGenerator.APPLICATION_DESCRIPTION;
+import static uk.co.telegraph.switchboard.domain.entities.ApplicationGenerator.APPLICATION_ID;
+import static uk.co.telegraph.switchboard.domain.entities.ApplicationGenerator.APPLICATION_NAME;
+import static uk.co.telegraph.switchboard.domain.entities.ApplicationGenerator.APPLICATION_SECRET;
+import static uk.co.telegraph.switchboard.domain.entities.ApplicationGenerator.generateApplication;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ApplicationTests {
-
-  public static final String APPLICATION_ID = "d58f5d98-4e54-4a1e-9327-fb4331017608";
-  public static final String APPLICATION_NAME = "Mobile Application";
-  public static final String APPLICATION_DESCRIPTION = "A simple mobile application";
-  public static final String APPLICATION_SECRET = "Some complex secret";
+class ApplicationTest {
 
 	private Application application;
 
@@ -51,8 +51,7 @@ class ApplicationTests {
 
 	@Test
 	void should_convert_to_string() {
-		application.setName(APPLICATION_NAME);
-		application.setDescription(APPLICATION_DESCRIPTION);
+		application = generateApplication();
 
 		assertThat(application.toString())
 				.startsWith("Application")
@@ -79,8 +78,7 @@ class ApplicationTests {
 
 	@Test
 	void should_be_equal_to_another_object_with_same_id() {
-		application.setName(APPLICATION_NAME);
-		application.setDescription(APPLICATION_DESCRIPTION);
+		application = generateApplication();
 		Application compare = new Application(APPLICATION_ID);
 
 		assertThat(application.equals(compare))
@@ -89,9 +87,7 @@ class ApplicationTests {
 
 	@Test
 	void should_not_be_equal_to_another_object_with_different_id() {
-		application.setName(APPLICATION_NAME);
-		application.setDescription(APPLICATION_DESCRIPTION);
-
+		application = generateApplication();
 		Application compare = new Application("a77098c4-6cf2-40c6-a62b-66c7d728b2c1");
 		compare.setName(APPLICATION_NAME);
 		compare.setDescription(APPLICATION_DESCRIPTION);
@@ -108,8 +104,7 @@ class ApplicationTests {
 
 	@Test
 	void should_have_the_same_hashCode_than_an_object_with_same_id() {
-		application.setName(APPLICATION_NAME);
-		application.setDescription(APPLICATION_DESCRIPTION);
+    application = generateApplication();
 		Application compare = new Application(APPLICATION_ID);
 
 		assertThat(application.hashCode())
@@ -118,8 +113,7 @@ class ApplicationTests {
 
 	@Test
 	void should_not_have_the_same_hashCode_than_an_object_with_different_id() {
-		application.setName(APPLICATION_NAME);
-		application.setDescription(APPLICATION_DESCRIPTION);
+		application = generateApplication();
 
 		Application compare = new Application("a77098c4-6cf2-40c6-a62b-66c7d728b2c1");
 		compare.setName(APPLICATION_NAME);
@@ -128,5 +122,4 @@ class ApplicationTests {
 		assertThat(application.hashCode())
 				.isNotEqualTo(compare.hashCode());
 	}
-
 }

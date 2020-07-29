@@ -12,7 +12,6 @@ import org.springframework.data.annotation.Id;
 public class Application {
   @Id
   @EqualsAndHashCode.Include
-  @Setter(AccessLevel.NONE)
   private String id;
   private String name;
   private String description;
