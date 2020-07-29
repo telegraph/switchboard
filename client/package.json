@@ -27,10 +27,10 @@
     "gulp-json-editor": "^2.5.4",
     "jest": "^26.1.0",
     "jest-junit": "^11.1.0",
-    "jscpd": "^3.3.0"
+    "jscpd": "^3.3.0",
+    "parcel-bundler": "^1.12.4"
   },
   "dependencies": {
-    "parcel-bundler": "^1.12.4",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
