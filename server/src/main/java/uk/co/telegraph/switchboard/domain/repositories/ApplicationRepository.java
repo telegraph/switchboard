@@ -17,4 +17,10 @@ public interface ApplicationRepository extends Repository<Application, String> {
   Optional<Application> findById(String id);
 
   Page<Application> findAll(Pageable pageable);
+
+  boolean existsById(String id);
+
+  Application save(Application application);
+
+  void deleteById(String id);
 }
